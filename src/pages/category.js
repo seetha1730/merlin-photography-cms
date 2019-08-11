@@ -4,7 +4,7 @@ function Category() {
 
     return (
         <div>
-            <h1>View Categories</h1>
+            <h2>View Categories</h2>
             <table className="table table-striped">
                 <thead>
                     <tr>

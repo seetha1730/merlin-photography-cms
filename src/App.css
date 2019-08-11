@@ -30,6 +30,7 @@
   display: inline-block;
   margin: 0 5px;
 }
+.right-bar form button{margin-left: 20px}
 
 @keyframes App-logo-spin {
   from {
