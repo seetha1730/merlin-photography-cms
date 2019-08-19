@@ -1,4 +1,5 @@
 import React from 'react';
+import { METHODS } from 'http';
 
 class Category extends React.Component {
 
@@ -8,10 +9,14 @@ class Category extends React.Component {
     }
 
     addCategory(){
-        //http post -> api send
-        console.log(this.state.category)
-
-        //http get => api new values
+       fetch('http://localhost:5100/api/addCategory',{
+           method:'POST',
+           headers:{
+                'Content-Type': 'application/json',
+           },
+           body:JSON.stringify({name:this.state.category})
+       }).then(result => result.json().then(res => alert(res.msg)))
+      
     }
 
     render() {
@@ -49,7 +54,7 @@ class Category extends React.Component {
                 <form>
                     <div className="form-group">
                         <h3>Add Category</h3>
-                        <input type="text" className="form-control" id="add-category" placeholder="add categories" onChange={(e) => this.setState({category: e.target.value})}/>
+                        <input type="text" className="form-control" placeholder="add categories" onChange={(e) => this.setState({category: e.target.value})}/>
                     </div>
                     <button type="button" className="btn btn-primary" onClick={() => this.addCategory()}>Add</button>
 
