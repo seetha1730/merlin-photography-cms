@@ -6,16 +6,28 @@ class Category extends React.Component {
 
     state = {
         category:'',
+        catList:[],
+    }
+
+    componentWillMount() {
+       this.getCatList()
+    }
+
+    getCatList() {
+        fetch('http://192.168.1.103:5100/api/Category').then(list => list.json().then(result => this.setState({catList:result})))
     }
 
     addCategory(){
-       fetch('http://localhost:5100/api/addCategory',{
+       fetch('http://192.168.1.103:5100/api/addCategory',{
            method:'POST',
            headers:{
                 'Content-Type': 'application/json',
            },
            body:JSON.stringify({name:this.state.category})
-       }).then(result => result.json().then(res => alert(res.msg)))
+       }).then(result => result.json().then(res => {
+           this.getCatList()
+           alert(res.msg)
+       }))
       
     }
 
@@ -33,22 +45,14 @@ class Category extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Macro</td>
-                        <td><p className="underline">Edit</p>/<p className="underline">delete</p></td>
+                    {this.state.catList.map( (list,index) =>
+                        <tr>
+                            <th scope="row">{index+1}</th>
+                            <td>{list.name}</td>
+                            <td><p className="underline">Edit</p>/<p className="underline">delete</p></td>
 
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Portsit</td>
-                        <td><p className="underline">Edit</p>/<p className="underline">delete</p></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Insects</td>
-                        <td><p className="underline">Edit</p>/<p className="underline">delete</p></td>
-                    </tr>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
                 <form>
